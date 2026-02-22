@@ -30,7 +30,9 @@ package main
 */
 
 import (
+	"context"
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -66,29 +68,179 @@ func NewObject(str string) Sayer {
 	}
 }
 
-func NewObjectGenerator() {
-	data := make(chan Sayer, 1)
+func NewObjectGenerator(ctx context.Context) (<-chan Sayer) {
+	resChan := make(chan Sayer, 1)
 
+	wg := &sync.WaitGroup{}
 
-	for {
-		NewObject("Base")
-		time.Sleep(time.Second)
-	}
+	tickerBase := time.NewTicker(1 * time.Second)
+	tickerChild := time.NewTicker(2 * time.Second)
+
+	wg.Add(1)
+	go func() {
+		defer func() {
+			wg.Done()
+			tickerBase.Stop()
+		}()
+
+		for {
+			select {
+			case <- ctx.Done():
+				return
+			case <-tickerBase.C:
+				resChan <- Base{name: "Hello Base from generator"}
+			}
+		}
+	}()
+
+	wg.Add(1)
+	go func() {
+		defer func() {
+			wg.Done()
+			tickerChild.Stop()
+		}()
+
+		for {
+			select {
+			case <- ctx.Done():
+				return
+			case <-tickerChild.C:
+				resChan <- Child{Base: Base{name: "Hello Inherited from generator"}, lastName: "Hello Child from generator"}
+			}
+		}
+	}()
+
+	go func() {
+		wg.Wait()
+		close(resChan)
+	}()
+	
+	return resChan
+}
+
+func AsyncHandler(ch <-chan Sayer) {
+	wg := sync.WaitGroup{}
+	wg.Add(1)
+
+	go func() {
+		defer wg.Done()
+		for e := range ch {
+			e.Say()
+		}
+	}()
+
+	wg.Wait()
 }
 
 func main() {
-	b1 := &Base{name: "Parent"}
-	c1 := &Child{Base: Base{name: "Child"}, lastName: "Inherited"}
+	// b1 := &Base{name: "Parent"}
+	// c1 := &Child{Base: Base{name: "Child"}, lastName: "Inherited"}
 
-	b1.Say()
-	c1.Say()
+	// b1.Say()
+	// c1.Say()
 
-	relArr := []Sayer{b1, c1}
-	for _, v := range relArr {
-		v.Say()
-	}
+	// relArr := []Sayer{b1, c1}
+	// for _, v := range relArr {
+	// 	v.Say()
+	// }
 
-	//TODO: 14
 
-	//TODO: 15
+	ctx, cancel := context.WithTimeout(context.Background(), 11 * time.Second)
+	defer cancel()
+
+	sayers := NewObjectGenerator(ctx)
+
+	AsyncHandler(sayers)
 }	
+
+//TODO: Odner
+// package main
+
+// import (
+// 	"context"
+// 	"time"
+// 	"fmt"
+// 	"sync"
+// )
+
+// type Sayer interface {
+// 	Say()
+// }
+
+// type Base struct {
+// 	name string
+// }
+
+// func (b Base) Say() {
+// 	fmt.Printf("Hello, %s\n", b.name)
+// }
+
+// type Child struct {
+// 	Base
+// 	lastName string
+// }
+
+// func (c Child) Say() {
+// 	fmt.Printf("Hello %s %s!\n", c.lastName, c.Base.name)
+// }
+
+// func NewObject(str string) Sayer {
+// 	switch str {
+// 	case "Base":
+// 		return Base{name: "Parent"}
+// 	case "Child":
+// 		return Child{lastName: "Inherited", Base: Base{name: "Child"}}
+// 	default:
+// 		return nil
+// 	}
+// }
+
+// func Generator(ctx context.Context) <-chan Sayer {
+// 	ch := make(chan Sayer)
+
+// 	worker := func(ticker *time.Ticker, typeObject string) {
+// 		defer ticker.Stop()
+// 		for {
+// 			select {
+// 			case <-ctx.Done():
+// 				return
+// 			case <-ticker.C:
+// 				ch <- NewObject(typeObject)
+// 			}
+// 		}
+// 	}
+
+// 	wg := sync.WaitGroup{}
+
+// 	go func() {
+// 		defer func() {
+// 			wg.Wait()
+// 			close(ch)
+// 		}()
+		
+// 		wg.Go(func() {worker(time.NewTicker(1*time.Second), "Base")})
+		
+// 		wg.Go(func() {worker(time.NewTicker(2*time.Second), "Child")})
+// 	}()
+
+// 	return ch
+// }
+
+
+// func main() {
+// 	ctx, cancel := context.WithTimeout(context.Background(), 11*time.Second)
+// 	defer cancel()
+
+// 	wg := sync.WaitGroup{}
+// 	wg.Add(1)
+	
+// 	go func() {
+// 		defer wg.Done()
+
+// 		for newObj := range Generator(ctx) {
+// 			newObj.Say()
+// 		}
+// 	}()
+
+// 	wg.Wait()
+// }
