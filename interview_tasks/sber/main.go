@@ -244,3 +244,99 @@ func main() {
 
 // 	wg.Wait()
 // }
+
+
+
+//TODO: solution
+
+// package main
+
+// import (
+// 	"context"
+// 	"fmt"
+// 	"sync"
+// 	"time"
+// )
+
+// type Sayer interface {
+// 	Say()
+// } 
+
+// type Base struct {
+// 	name string
+// }
+
+// func (b Base) Say() {
+// 	fmt.Printf("Hello, %s\n", b.name)
+// }
+
+// type Child struct {
+// 	Base
+// 	lastName string
+// }
+
+// func (c Child) Say() {
+// 	fmt.Printf("Hello %s %s!\n", c.lastName, c.Base.name)
+// }
+
+// func NewObject(str string) Sayer {
+// 	switch str {
+// 	case "Base":
+// 		return Base{name: "Parent"}
+// 	case "Child":
+// 		return Child{lastName: "Inherited", Base: Base{name: "Child"}}
+// 	default:
+// 		return nil
+// 	}
+// }
+
+// func Generator() <-chan Sayer {
+// 	ch := make(chan Sayer)
+// 	ctx, chanel := context.WithTimeout(context.Background(), 11*time.Second)
+
+// 	createObj := func(typeObject string) {
+// 		select {
+// 		case <-ctx.Done():
+// 		default:
+// 			val :=NewObject(typeObject)
+
+// 			select {
+// 			case <-ctx.Done():
+// 			case ch <- val:
+// 			}
+		
+// 		}
+// 	}
+// 	worker := func(ticker *time.Ticker, typeObject string) {
+// 		defer ticker.Stop()
+// 		for {
+// 			select {
+// 			case <-ctx.Done():
+// 				return
+// 			case <-ticker.C:
+// 				createObj(typeObject)
+// 			}
+// 		}
+// 	}
+// 	go func() {
+// 		defer func() {
+// 			close(ch)
+// 			chanel()
+// 		}()
+// 		var wg sync.WaitGroup
+
+// 		wg.Go(func() {
+// 			worker(time.NewTicker(1*time.Second), "Base")
+// 		})
+// 		wg.Go(func() {
+// 			worker(time.NewTicker(2*time.Second), "Child")
+// 		})
+// 		wg.Wait()
+// 	}()
+
+// 	return ch
+// }
+
+// func main() {
+
+// }
