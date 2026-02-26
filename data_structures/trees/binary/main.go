@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Node struct {
 	Value int
@@ -118,6 +121,61 @@ func NewTree() *Tree {
 	return &Tree{}
 }
 
+// func DFS(root *Node)[]int {
+// 	var nums = []int{}
+// 	if root == nil {
+// 		return nums
+// 	}
+
+// 	nums = append(nums, DFS(root.Left)...)
+// 	nums = append(nums, root.Value)
+// 	nums = append(nums, DFS(root.Right)...)
+
+// 	return nums
+// }
+
+func DFS(root *Node) []int {
+	res := []int{}
+
+	if root == nil {
+		return res
+	}
+
+	res = append(res, root.Value)
+	res = append(res, DFS(root.Left)...)
+	res = append(res, DFS(root.Right)...)
+
+	return res
+}
+
+func BFS(root *Node) {
+	if root == nil {
+		return
+	}
+
+	queue := []*Node{root}
+	level := 1
+
+	for len(queue) > 0 {
+		node := queue[0]
+		queue = queue[1:]
+
+		fmt.Printf("Значение: %d Уровень: %d\n", node.Value, level)
+
+		if node.Left != nil {
+			queue = append(queue, node.Left)
+			level += 1
+		}
+		
+		if node.Right != nil {
+			queue = append(queue, node.Right)
+			level += 1
+		}
+		level--
+	}
+	fmt.Println()
+}
+
 func main() {
 	newTree := NewTree()
 
@@ -128,10 +186,17 @@ func main() {
 	newTree.Insert(5)
 	newTree.Insert(0)
 
-	newTree.Root.PrintTree()
-	Delete(newTree.Root, 10)
+	// newTree.Root.PrintTree()
+	// fmt.Println(DFS(newTree.Root))
+	// BFS(newTree.Root)
+	fmt.Println(DFS(newTree.Root))
 	fmt.Println("")
 
-	newTree.Root.PrintTree()
+	// newTree.Root.PrintTree()
+
+
+	z := strings.Builder{}
+	z.WriteString("Hello")
+	fmt.Println(z.String())
 
 }
