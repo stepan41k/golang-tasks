@@ -3,35 +3,51 @@ package main
 import "fmt"
 
 func computePrefix(pattern string) []int {
-	// Создай массив pi длиной как паттерн.
-	// Используй два указателя: j (длина текущего префикса) и i (текущий символ, начиная с 1).
-	// Если P[i] == P[j], то j++, записываем pi[i] = j.
-	// Если не равны и j > 0, откатываем j к pi[j-1] и пробуем снова.
 	pi := make([]int, len(pattern))
-	j, i := 0, 1
+	j := 0
 
-	if pattern[i] == pattern[j] {
-		j++
-		pi[i] = j
-	} else {
-		if j > 0 {
+	for i := 1; i < len(pattern); i++ {
+		if j > 0 && pattern[i] != pattern[j] {
 			j = pi[j-1]
 		}
+
+		if pattern[i] == pattern[j] {
+			j++
+		}
+
+		pi[i] = j
 	}
 
 	return pi
 }
 
 func KMP(text, pattern string) []int {
-	res := []int{}
-	fmt.Println(computePrefix(pattern))
-	// Мы идем по тексту T один раз. Если символы совпадают — идем дальше. Если нет — смотрим в таблицу pi, чтобы узнать, на какую позицию в паттерне мы можем откатиться, не перепроверяя уже совпавшие символы в тексте.
+	if len(pattern) == 0 {
+		return nil
+	}
 
-	// Возвращает слайс всех индексов (начал) вхождений паттерна в текст.
+	res := []int{}
+	pi := computePrefix(pattern)
+	j := 0
+
+	for i := 0; i < len(text); i++ {
+		for j > 0 && text[i] != text[j] {
+			j = pi[j-1]
+		}
+
+		if text[i] == pattern[j] {
+			j++
+		}
+
+		if j == len(pattern) {
+			res = append(res, i - len(pattern) + 1)
+			j = pi[j-1]
+		}
+	}
 
 	return res
 }
 
 func main() {
-	KMP("ABCDABD", "ABCAD")
+	fmt.Println(KMP("ABACABABEBRAABACABA", "ABACABA"))
 }
