@@ -1,71 +1,172 @@
-# Algorithms and data structures
+# GolangTasks
 
----
+A comprehensive collection of Go programming tasks, algorithms, data structures, concurrency patterns, and interview preparation exercises.
 
-1. [Массивы](#1-arrays)
-2. [Связные списки](#2-linked-lists)
-3. [Стек](#3-stack)
-4. [Очереди](#4-queues)
-5. [Бинарная куча](#5-binary-heap)
-6. [Хеш-таблица](#6-hash-table)
-7. [Деревья](#7-trees)
-8. [Графы](#8-graphs)
+## Project Info
 
----
+- **Module:** `github.com/stepan41k/GolangTasks`
+- **Go Version:** 1.25.3
 
-## 🧊 1. Массивы <a name="1-arrays"></a>
-*   **1.1 Статический массив** — фиксированный размер, выделяемый при создании.
-*   **1.2 Динамический массив** — массив с возможностью автоматического изменения размера (`slice`).
-*   **1.3 Двумерные массивы (матрицы)** — массивы массивов для работы с табличными данными.
+## Directory Structure
 
-## 🔗 2. Связные списки <a name="2-linked-lists"></a>
-*   **2.1 Односвязный список** — каждый узел хранит ссылку на следующий.
-*   **2.2 Двусвязный список** — узлы хранят ссылки и на следующий, и на предыдущий элементы.
-*   **2.3 Циклические списки** — последний элемент ссылается на первый.
+### Algorithms
 
-## 🥞 3. Стек (Stack) <a name="3-stack"></a>
-Структура, работающая по принципу **LIFO** (Last In, First Out). Основные операции: `push`, `pop`, `peek`.
+Classic algorithm implementations:
 
-## ⏳ 4. Очереди (Queues) <a name="4-queues"></a>
-*   **4.1 FIFO (First In, First Out)** — классическая очередь.
-*   **4.2 LIFO (Last In, First Out)** — (в контексте специфических реализаций очередей).
-*   **4.3 Двусторонняя очередь (Deque)** — добавление и удаление с обоих концов.
-*   **4.4 Очередь с приоритетом (Priority Queue)** — элементы извлекаются согласно их приоритету.
+| Directory | Description |
+|---|---|
+| `algorithms/backtracking/` | Backtracking algorithm |
+| `algorithms/dijkstra/` | Dijkstra's shortest-path algorithm |
+| `algorithms/fibonachi/` | Fibonacci number computation |
+| `algorithms/kmp/` | Knuth-Morris-Pratt string matching |
+| `algorithms/quick_sort/` | Quick sort algorithm |
+| `algorithms/token_bucket/` | Token bucket rate limiting |
 
-## 🏔️ 5. Бинарная куча (Binary heap) <a name="5-binary-heap"></a>
-*   **5.1 Принципы работы** — структура полного бинарного дерева.
-*   **5.2 Минимальная куча (Min-Heap)** — корень всегда содержит минимальный элемент.
-*   **5.3 Максимальная куча (Max-Heap)** — корень всегда содержит максимальный элемент.
+### Async/Await
 
-## 🗝️ 6. Хеш-таблица (Hash table) <a name="6-hash-table"></a>
-Структура, сопоставляющая ключи значениям для быстрого поиска.
-*   **6.1 Основные характеристики** — время доступа в среднем O(1).
-*   **6.2 Хеш-функция** — алгоритм преобразования ключа в индекс.
-*   **6.3 Бакет (bucket)** — ячейка хранения данных.
-*   **6.4 Выбор бакета** — механизмы распределения ключей.
-*   **6.5 Resize (рехеширование)** — динамическое увеличение таблицы при заполнении.
-*   **6.6 Худший случай** — коллизии и деградация сложности до O(n).
-*   **6.7 Оптимизация** — методы разрешения коллизий (цепочки, открытая адресация).
+| Directory | Description |
+|---|---|
+| `async-await/` | Future/Promise pattern emulation using generics |
 
-## 🌳 7. Деревья (Trees) <a name="7-trees"></a>
-*   **7.1 Бинарное дерево (Binary tree)**
-    *   7.1.1 Общие сведения и терминология.
-    *   7.1.2 Виды деревьев (полные, завершенные, сбалансированные).
-    *   7.1.3 Бинарные деревья поиска (BST).
-*   **7.2 AVL деревья** — самобалансирующиеся деревья поиска.
-*   **7.3 Красно-черные деревья** — деревья с гарантированной высотой O(log n).
-*   **7.4 Б-дерево (B-tree)** — используется в файловых системах и БД.
-*   **7.5 Б+-дерево (B+tree)** — оптимизированная версия для хранения на диске.
-*   **7.6 Префиксные деревья (Tries)** — эффективный поиск строк.
+### Bit Manipulation
 
-## 🕸️ 8. Графы <a name="8-graphs"></a>
-*   **8.1 Деревья (Tree)** — связный ациклический граф.
-*   **8.2 Ориентированные графы** — ребра имеют направление.
-*   **8.3 Неориентированные графы** — ребра двусторонние.
-*   **8.4 Взвешенные графы** — ребра имеют вес (стоимость).
-*   **8.5 Двудольные графы** — вершины можно разбить на два независимых множества.
-*   **8.6 Сильно связные графы** — путь есть между любыми двумя вершинами.
-*   **8.7 Графы с циклами** — содержат замкнутые пути.
-*   **8.8 Графы без циклов (DAG)** — направленные ациклические графы.
+| Directory | Description |
+|---|---|
+| `bit_tasks/check_bit/` | Check if a specific bit is set |
+| `bit_tasks/find_unique/` | Find unique element using XOR |
+| `bit_tasks/is_power_of_two/` | Check if a number is a power of two |
+| `bit_tasks/kernigan_count_set_bits/` | Count set bits (Kernighan's algorithm) |
+| `bit_tasks/set_bit/` | Set a specific bit |
+| `bit_tasks/toggle_bit/` | Toggle a specific bit |
+| `bit_tasks/zero_bit/` | Clear a specific bit |
 
----
+### Concurrency Patterns
+
+| Directory | Description |
+|---|---|
+| `concurency_patterns/batch_processing/` | Batch processing with goroutines |
+| `concurency_patterns/cache_implementation/` | Concurrent-safe cache |
+| `concurency_patterns/distributed_query/` | Distributed query pattern |
+| `concurency_patterns/fan_in_fan_out/` | Fan-in / Fan-out channel pattern |
+| `concurency_patterns/merge_channels/` | Merging multiple channels |
+| `concurency_patterns/pipeline/` | Pipeline pattern |
+| `concurency_patterns/semaphore/` | Semaphore using buffered channels |
+| `concurency_patterns/worker_pool/` | Worker pool implementation |
+
+### Concurrency Primitives
+
+| Directory | Description |
+|---|---|
+| `concurrency/atomic_select_example/` | `sync/atomic` + `select` usage |
+| `concurrency/context_with_timeout/` | Context with cancellation and timeout |
+| `concurrency/long_calculation/` | Cancellable long-running computation |
+| `concurrency/ticker_example/` | `time.Ticker` periodic execution |
+| `concurrency/wait_group/` | `sync.WaitGroup` usage |
+
+### Data Structures
+
+**Arrays:** `dynamic_array/`, `matrix/`, `statick_array/`
+
+**Binary Heap:** `max/`, `min/`
+
+**Graphs:** `acyclic/`, `bipartite/`, `cyclic/`, `direct/`, `strongly_connected/`, `tree/`, `undirect/`, `weighted/`
+
+**Hash Table:** `hash_table/`
+
+**Linked Lists:** `circle/`, `double/`, `single/`
+
+**Queues:** `deque/`, `fifo/`, `priority/`
+
+**Stack:** `stack/`
+
+**Trees:** `avl/`, `b/`, `b_plus/`, `binary/`, `is_valid/`, `prefix/`, `red-black/`
+
+### Go Language Features
+
+| Directory | Description |
+|---|---|
+| `golangs_features/batch_proccessing/` | Batch processing (v1) |
+| `golangs_features/batch_proccessing_v2/` | Batch processing (v2) |
+| `golangs_features/batch_proccessing_v3/` | Batch processing (v3) |
+| `golangs_features/closure/` | Closures in Go |
+| `golangs_features/concurrent_safe_map/` | Thread-safe map |
+| `golangs_features/dependency_injection/` | Dependency injection pattern |
+| `golangs_features/function/` | First-class functions |
+| `golangs_features/gracefull_shutdown/` | Graceful server shutdown |
+| `golangs_features/hard_batch_proccessing/` | Advanced batch processing |
+| `golangs_features/rate_limiter/` | Rate limiting |
+| `golangs_features/resource_pool/` | Resource/connection pool |
+| `golangs_features/ttl_cache/` | TTL-based cache |
+| `golangs_features/urls_fetching_err_group/` | Concurrent URL fetching with errgroup |
+| `golangs_features/worker_pool/` | Worker pool pattern |
+
+### Interview Tasks
+
+| Directory | Description |
+|---|---|
+| `interview_tasks/err_group/` | errgroup usage |
+| `interview_tasks/golang_gemini_interview/` | AI-assisted interview sessions (organized by date) |
+| `interview_tasks/interview_popular_tasks/` | Common interview problems |
+| `interview_tasks/sber/` | Sber interview tasks |
+| `interview_tasks/worker_pool/` | Worker pool interview task |
+| `interview_tasks/yandex/` | Yandex interview tasks |
+
+### Linux
+
+Shell scripting and sysadmin tasks:
+
+| Directory | Description |
+|---|---|
+| `linux/bash/iterate_ips/` | IP iteration script |
+| `linux/commands.sh` | Shell commands reference |
+| `linux/find/find_file_condition/` | Find files by condition |
+| `linux/grep/black_box/` | Black box grep task |
+| `linux/grep/logs_analysis/` | Log analysis with grep |
+| `linux/kuber_monitoring/kuber_resource_limits/` | Kubernetes resource monitoring |
+| `linux/memory/inodes/` | Inode inspection |
+| `linux/netcat/network_availability/` | Network availability check |
+| `linux/ss/find_port/` | Find listening ports |
+
+### SQL Tasks
+
+| Directory | Description |
+|---|---|
+| `sql_tasks/avg_categories_price/` | Average price by category |
+| `sql_tasks/rank_task/` | SQL RANK / window functions |
+| `sql_tasks/vip_clients/` | VIP client identification |
+
+### Standard Library
+
+| Directory | Description |
+|---|---|
+| `std/reflect/type/` | `reflect.Type` usage |
+| `std/reflect/value/` | `reflect.Value` usage |
+
+### Testing
+
+| Directory | Description |
+|---|---|
+| `testing/benchmark_simple_task/` | Simple benchmark example |
+
+### Practice Tasks
+
+| Directory | Description |
+|---|---|
+| `zadachki_41k/dedupliceate_slice/` | Slice deduplication |
+| `zadachki_41k/gracefully/` | Graceful shutdown |
+| `zadachki_41k/is_anagramm/` | Anagram checker |
+| `zadachki_41k/is_palindrome/` | Palindrome checker |
+| `zadachki_41k/len_same_symbols/` | Count matching symbols |
+| `zadachki_41k/parallel_squares/` | Parallel computation |
+
+## Dependencies
+
+| Package | Purpose |
+|---|---|
+| `github.com/stretchr/testify` | Testing framework |
+| `golang.org/x/sync` | Advanced concurrency (errgroup, semaphore) |
+| `golang.org/x/exp` | Experimental Go packages |
+
+## License
+
+See [LICENSE](LICENSE) for details.
