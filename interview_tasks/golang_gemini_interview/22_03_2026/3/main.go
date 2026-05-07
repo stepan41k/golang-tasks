@@ -1,4 +1,6 @@
-if err == io.EOF { ... }
+package main
 
-// Способ 2
-if errors.Is(err, io.EOF) { ... }
+// if err == io.EOF { ... }
+
+// // Способ 2
+// if errors.Is(err, io.EOF) { ... }

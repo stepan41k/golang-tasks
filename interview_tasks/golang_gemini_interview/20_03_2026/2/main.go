@@ -5,11 +5,15 @@ import (
 	"fmt"
 )
 
+func doExternalCall() error {
+	return nil
+}
+
 func handleRequest() error {
 	errChan := make(chan error, 1)
 	
 	go func() {
-		err := doExternalCall() // допустим, это долгий сетевой запрос
+		err := doExternalCall()
 		errChan <- err
 	}()
 
